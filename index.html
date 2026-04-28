@@ -1,0 +1,426 @@
+<!--
+  Filnavn: index.html
+  Formål: Hovedstruktur for Sannsynlighetslab – en pedagogisk demo-app for kombinatorikk og sannsynlighet.
+  Versjon: 0.1.0
+-->
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sannsynlighetslab</title>
+
+  <meta
+    name="description"
+    content="Interaktiv demo-app for undervisning i kombinatorikk og sannsynlighet."
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="app-header__content">
+      <p class="eyebrow">Demo-verktøy for klasserommet</p>
+      <h1>Sannsynlighetslab</h1>
+      <p class="lead">
+        Utforsk myntkast, terningkast, trekking og kombinasjoner gjennom
+        simuleringer, visuelle eksempler og pedagogiske forklaringer.
+      </p>
+    </div>
+  </header>
+
+  <main class="app-layout">
+    <nav class="module-menu" aria-label="Velg modul">
+      <h2>Moduler</h2>
+
+      <button class="module-button is-active" data-module="coin">
+        <span>1</span>
+        Myntkast
+      </button>
+
+      <button class="module-button" data-module="dice">
+        <span>2</span>
+        Terningkast
+      </button>
+
+      <button class="module-button" data-module="drawing">
+        <span>3</span>
+        Trekking
+      </button>
+
+      <button class="module-button" data-module="outfits">
+        <span>4</span>
+        Antrekk
+      </button>
+
+      <button class="module-button" data-module="codes">
+        <span>5</span>
+        Koder
+      </button>
+
+      <button class="module-button" data-module="order">
+        <span>6</span>
+        Rekkefølge
+      </button>
+    </nav>
+
+    <section class="module-stage" aria-live="polite">
+      <article class="module-panel is-visible" id="module-coin">
+        <div class="module-panel__intro">
+          <p class="eyebrow">Sannsynlighet</p>
+          <h2>Myntkast</h2>
+          <p>
+            Undersøk forskjellen mellom teoretisk og eksperimentell
+            sannsynlighet.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <section class="control-card">
+            <h3>Innstillinger</h3>
+
+            <label for="coin-count">Antall kast</label>
+            <input
+              id="coin-count"
+              type="number"
+              min="1"
+              max="10000"
+              value="100"
+            />
+
+            <button class="primary-button" id="run-coin-demo">
+              Kast mynter
+            </button>
+          </section>
+
+          <section class="result-card">
+            <h3>Resultat</h3>
+
+            <div class="result-display">
+              <div>
+                <span class="result-label">Kron</span>
+                <strong id="coin-heads-result">0</strong>
+              </div>
+
+              <div>
+                <span class="result-label">Mynt</span>
+                <strong id="coin-tails-result">0</strong>
+              </div>
+            </div>
+
+            <p class="formula">
+              Teoretisk sannsynlighet: P(kron) = 1/2 = 50 %
+            </p>
+          </section>
+        </div>
+
+        <section class="teacher-note">
+          <h3>Spørsmål til klassen</h3>
+          <p>
+            Blir resultatet alltid nøyaktig 50 % kron? Hva skjer når vi øker
+            antall kast?
+          </p>
+        </section>
+      </article>
+
+      <article class="module-panel" id="module-dice">
+        <div class="module-panel__intro">
+          <p class="eyebrow">Utfallsrom</p>
+          <h2>Terningkast</h2>
+          <p>
+            Kast én eller to terninger og se hvordan sannsynligheten fordeler
+            seg.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <section class="control-card">
+            <h3>Innstillinger</h3>
+
+            <label for="dice-count">Antall terninger</label>
+            <select id="dice-count">
+              <option value="1">Én terning</option>
+              <option value="2" selected>To terninger</option>
+            </select>
+
+            <label for="dice-rolls">Antall kast</label>
+            <input
+              id="dice-rolls"
+              type="number"
+              min="1"
+              max="10000"
+              value="100"
+            />
+
+            <button class="primary-button" id="run-dice-demo">
+              Kast terninger
+            </button>
+          </section>
+
+          <section class="result-card">
+            <h3>Resultat</h3>
+
+            <div class="dice-display" id="dice-display">
+              <span class="die">?</span>
+              <span class="die">?</span>
+            </div>
+
+            <div class="bar-chart" id="dice-chart">
+              <p class="placeholder-text">
+                Diagrammet vises etter simulering.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <section class="teacher-note">
+          <h3>Spørsmål til klassen</h3>
+          <p>
+            Er alle summer like sannsynlige når vi kaster to terninger? Hvorfor
+            er for eksempel sum 7 vanligere enn sum 2?
+          </p>
+        </section>
+      </article>
+
+      <article class="module-panel" id="module-drawing">
+        <div class="module-panel__intro">
+          <p class="eyebrow">Avhengige og uavhengige hendelser</p>
+          <h2>Trekking med og uten tilbakelegging</h2>
+          <p>
+            Sammenlign hva som skjer med sannsynligheten når en kule legges
+            tilbake eller beholdes ute.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <section class="control-card">
+            <h3>Innstillinger</h3>
+
+            <label for="red-balls">Røde kuler</label>
+            <input id="red-balls" type="number" min="0" max="20" value="3" />
+
+            <label for="blue-balls">Blå kuler</label>
+            <input id="blue-balls" type="number" min="0" max="20" value="2" />
+
+            <label for="green-balls">Grønne kuler</label>
+            <input id="green-balls" type="number" min="0" max="20" value="1" />
+
+            <label for="draw-mode">Trekkemåte</label>
+            <select id="draw-mode">
+              <option value="with-replacement">Med tilbakelegging</option>
+              <option value="without-replacement">Uten tilbakelegging</option>
+            </select>
+
+            <button class="primary-button" id="run-drawing-demo">
+              Trekk kule
+            </button>
+
+            <button class="secondary-button" id="reset-drawing-demo">
+              Nullstill pose
+            </button>
+          </section>
+
+          <section class="result-card">
+            <h3>Pose og sannsynlighet</h3>
+
+            <div class="bag-display" id="bag-display">
+              <p class="placeholder-text">
+                Kulene vises her.
+              </p>
+            </div>
+
+            <div class="probability-display" id="drawing-probability">
+              <p>
+                P(rød), P(blå) og P(grønn) vises etter at posen er laget.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <section class="teacher-note">
+          <h3>Spørsmål til klassen</h3>
+          <p>
+            Hvorfor endrer sannsynligheten seg uten tilbakelegging, men ikke
+            med tilbakelegging?
+          </p>
+        </section>
+      </article>
+
+      <article class="module-panel" id="module-outfits">
+        <div class="module-panel__intro">
+          <p class="eyebrow">Multiplikasjonsprinsippet</p>
+          <h2>Antrekk og kombinasjoner</h2>
+          <p>
+            Regn ut hvor mange ulike antrekk som kan lages når hver kategori
+            har flere valg.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <section class="control-card">
+            <h3>Valg</h3>
+
+            <label for="hat-count">Hatter</label>
+            <input id="hat-count" type="number" min="0" max="20" value="2" />
+
+            <label for="shirt-count">Skjorter</label>
+            <input id="shirt-count" type="number" min="0" max="20" value="3" />
+
+            <label for="pants-count">Bukser</label>
+            <input id="pants-count" type="number" min="0" max="20" value="2" />
+
+            <label for="shoe-count">Sko</label>
+            <input id="shoe-count" type="number" min="0" max="20" value="4" />
+
+            <button class="primary-button" id="calculate-outfits">
+              Beregn antrekk
+            </button>
+          </section>
+
+          <section class="result-card">
+            <h3>Resultat</h3>
+
+            <p class="formula" id="outfit-formula">
+              2 × 3 × 2 × 4 = 48
+            </p>
+
+            <strong class="big-number" id="outfit-total">48</strong>
+            <p>mulige antrekk</p>
+          </section>
+        </div>
+
+        <section class="teacher-note">
+          <h3>Spørsmål til klassen</h3>
+          <p>
+            Hva skjer med antall muligheter hvis vi legger til én ekstra
+            kategori, for eksempel jakke?
+          </p>
+        </section>
+      </article>
+
+      <article class="module-panel" id="module-codes">
+        <div class="module-panel__intro">
+          <p class="eyebrow">Eksponentiell vekst</p>
+          <h2>Koder og passord</h2>
+          <p>
+            Se hvor raskt antall mulige koder vokser når vi øker antall tegn
+            eller mulige symboler.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <section class="control-card">
+            <h3>Innstillinger</h3>
+
+            <label for="code-length">Antall tegn</label>
+            <input id="code-length" type="number" min="1" max="12" value="4" />
+
+            <label for="symbol-count">Mulige symboler per tegn</label>
+            <input id="symbol-count" type="number" min="2" max="100" value="10" />
+
+            <button class="primary-button" id="calculate-codes">
+              Beregn koder
+            </button>
+          </section>
+
+          <section class="result-card">
+            <h3>Resultat</h3>
+
+            <p class="formula" id="code-formula">
+              10 × 10 × 10 × 10 = 10 000
+            </p>
+
+            <strong class="big-number" id="code-total">10 000</strong>
+            <p>mulige koder</p>
+          </section>
+        </div>
+
+        <section class="teacher-note">
+          <h3>Spørsmål til klassen</h3>
+          <p>
+            Hvor mye vanskeligere blir en kode å gjette hvis vi går fra fire
+            til seks siffer?
+          </p>
+        </section>
+      </article>
+
+      <article class="module-panel" id="module-order">
+        <div class="module-panel__intro">
+          <p class="eyebrow">Permutasjoner og kombinasjoner</p>
+          <h2>Betyr rekkefølgen noe?</h2>
+          <p>
+            Utforsk forskjellen mellom å velge en gruppe og å lage en ordnet
+            rekkefølge.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <section class="control-card">
+            <h3>Innstillinger</h3>
+
+            <label for="people-count">Antall personer</label>
+            <input id="people-count" type="number" min="1" max="20" value="5" />
+
+            <label for="chosen-count">Antall som velges</label>
+            <input id="chosen-count" type="number" min="1" max="20" value="3" />
+
+            <label for="order-mode">Type valg</label>
+            <select id="order-mode">
+              <option value="combination">Rekkefølge betyr ikke noe</option>
+              <option value="permutation">Rekkefølge betyr noe</option>
+            </select>
+
+            <button class="primary-button" id="calculate-order">
+              Beregn
+            </button>
+          </section>
+
+          <section class="result-card">
+            <h3>Resultat</h3>
+
+            <p class="formula" id="order-formula">
+              Velg innstillinger og beregn.
+            </p>
+
+            <strong class="big-number" id="order-total">0</strong>
+            <p id="order-explanation">
+              Resultatet vises her.
+            </p>
+          </section>
+        </div>
+
+        <section class="teacher-note">
+          <h3>Spørsmål til klassen</h3>
+          <p>
+            Når er ABC det samme som BAC, og når er det to ulike utfall?
+          </p>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>
+      Sannsynlighetslab er laget for demonstrasjon, utforsking og samtale i
+      matematikkundervisning.
+    </p>
+  </footer>
+
+  <noscript>
+    <p>
+      Denne appen trenger JavaScript for å kjøre simuleringer og interaktive
+      beregninger.
+    </p>
+  </noscript>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+<!--
+  Slutt på fil: index.html
+  Versjon: 0.1.0
+-->
